@@ -42,8 +42,14 @@ class Pelicula
     private Collection $actores;
 
 
-    public function __construct()
+    public function __construct($titulo = null, $tipo = null, $descripcion = null, $foto = null, $url = null)
     {
+        $this->titulo = $titulo;
+        $this->tipo = $tipo;
+        $this->descripcion = $descripcion;
+        $this->foto = $foto;
+        $this->fecha_alta = new \DateTime();
+        $this->url = $url;
         $this->actores = new ArrayCollection();
     }
 
