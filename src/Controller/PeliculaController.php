@@ -102,4 +102,10 @@ class PeliculaController extends AbstractController
 
         return new JsonResponse(['succes' => true]);
     }
+
+    #[Route('/details/pelicula/{id}', name: 'details_pelicula')]
+    public function details($id){
+        $pelicula = $this->em->getRepository(Pelicula::class)->find($id);
+        return $this->render('pelicula/pelicula-details.html.twig', ['pelicula' => $pelicula]);
+    }
 }

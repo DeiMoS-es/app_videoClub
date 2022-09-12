@@ -12,6 +12,27 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     {{ form(form) }}
-    {{ dump(peliculas) }}
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Titulo</td>
+            <td>Descripcion</td>
+            <td>Fecha Alta</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pelicula in peliculas %}
+        <tr>
+            <td><a href="{{ path('details_pelicula', {id:pelicula.id}) }}">Ver</a></td>
+            <td>{{ pelicula.titulo }}</td>
+            <td>{{ pelicula.descripcion }}</td>
+            <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
 </div>
 {% endblock %}
