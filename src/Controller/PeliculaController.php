@@ -11,6 +11,7 @@ class PeliculaController extends AbstractController
     #[Route('/pelicula', name: 'app_pelicula')]
     public function index(): Response
     {
+
         return $this->render('pelicula/index.html.twig', [
             'controller_name' => 'PeliculaController',
         ]);

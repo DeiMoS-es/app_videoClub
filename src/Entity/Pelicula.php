@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PeliculaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,15 @@ class Pelicula
     #[ORM\ManyToOne(inversedBy: 'peliculas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'peliculas')]
+    private Collection $actores;
+
+
+    public function __construct()
+    {
+        $this->actores = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +132,30 @@ class Pelicula
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Actor>
+     */
+    public function getActores(): Collection
+    {
+        return $this->actores;
+    }
+
+    public function addActore(Actor $actore): self
+    {
+        if (!$this->actores->contains($actore)) {
+            $this->actores->add($actore);
+        }
+
+        return $this;
+    }
+
+    public function removeActore(Actor $actore): self
+    {
+        $this->actores->removeElement($actore);
 
         return $this;
     }
