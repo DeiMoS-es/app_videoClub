@@ -20,11 +20,6 @@ class PeliculaType extends AbstractType
                 'choices'  => Pelicula::TIPOS])
             ->add('descripcion')
             ->add('foto')
-            ->add('fecha_alta', DateTimeType::class, [
-                'placeholder' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
-                 ]])
-            ->add('url')
             ->add('submit', SubmitType::class)
         ;
     }

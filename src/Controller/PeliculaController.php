@@ -28,6 +28,9 @@ class PeliculaController extends AbstractController
         $form = $this->createForm(PeliculaType::class, $pelicula);//Genero el formulario, y lo relaciono con la entidad
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $url = str_replace(" ", "-", $form->get('titulo')->getData());
+            //TODO cambiar por una url correcta a un trailer
+            $pelicula->setUrl($url);
             $user = $this->em->getRepository(User::class)->find(1);
             $pelicula->setUser($user);
             $this->em->persist($pelicula);
