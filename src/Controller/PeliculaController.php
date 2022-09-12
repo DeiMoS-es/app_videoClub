@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Actor;
 use App\Entity\Pelicula;
 use App\Entity\User;
+use App\Form\PeliculaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,16 +21,22 @@ class PeliculaController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/pelicula', name: 'app_pelicula')]
-    public function index(): Response
+    #[Route('/', name: 'app_pelicula')]
+    public function index(Request $request): Response
     {
-        $actores = $this->em->getRepository(Actor::class)->findAll();
-        $peliculas = $this->em->getRepository(Pelicula::class)->findAll();
-        dump($actores);
-        dump($peliculas);
-
+        $pelicula = new Pelicula();
+        $form = $this->createForm(PeliculaType::class, $pelicula);//Genero el formulario, y lo relaciono con la entidad
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $user = $this->em->getRepository(User::class)->find(1);
+            $pelicula->setUser($user);
+            $this->em->persist($pelicula);
+            $this->em->flush();
+            return $this->redirectToRoute('app_pelicula');
+        }
         return $this->render('pelicula/index.html.twig', [
             'controller_name' => 'PeliculaController',
+            'form' => $form->createView()
         ]);
     }
 

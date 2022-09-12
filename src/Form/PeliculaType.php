@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Pelicula;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,13 +16,16 @@ class PeliculaType extends AbstractType
     {
         $builder
             ->add('titulo')
-            ->add('tipo')
+            ->add('tipo', ChoiceType::class,[
+                'choices'  => Pelicula::TIPOS])
             ->add('descripcion')
             ->add('foto')
-            ->add('fecha_alta')
+            ->add('fecha_alta', DateTimeType::class, [
+                'placeholder' => [
+                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+                 ]])
             ->add('url')
-            ->add('user')
-            ->add('actores')
+            ->add('submit', SubmitType::class)
         ;
     }
 
