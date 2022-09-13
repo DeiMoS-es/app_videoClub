@@ -39,6 +39,12 @@ class ActorRepository extends ServiceEntityRepository
         }
     }
 
+    /*public function actoresPelicula($idPelicula){
+        return $this->getEntityManager()
+            ->createQuery('SELECT pelicula.peliculaId, pelicula.actorId
+                               FROM  peliculaActor ');
+    }*/
+
 //    /**
 //     * @return Actor[] Returns an array of Actor objects
 //     */

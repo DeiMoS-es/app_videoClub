@@ -4,4 +4,15 @@
 
 {% block body %}
     {{ dump(pelicula) }}
+    <div class="container">
+        <h3>Titulo: {{ pelicula.titulo }}</h3>
+        <div>
+            <p> Descripcion: {{ pelicula.descripcion }}</p>
+            <p> Descripcion: {{ pelicula.tipo }}</p>
+
+        </div>
+        <div class="img">
+            <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found">
+        </div>
+    </div>
 {% endblock %}

@@ -5,14 +5,7 @@
 {% block navBar %} {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
+<div class="container">
     {{ form(form) }}
     <table class="table table-striped">
         <thead>
@@ -21,6 +14,7 @@
             <td>Titulo</td>
             <td>Descripcion</td>
             <td>Fecha Alta</td>
+            <td>Portada</td>
             <td class="text-center" colspan="3">Opciones </td>
         </tr>
         </thead>
@@ -31,9 +25,15 @@
             <td>{{ pelicula.titulo }}</td>
             <td>{{ pelicula.descripcion }}</td>
             <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
-            <td><i class="fa-regular fa-pen-to-square"></i></td>
-            <td><i class="fa-regular fa-eye"></i></td>
-            <td><i class="fa-solid fa-trash-can"></i></td>
+
+            <td>
+                {% if pelicula.foto != null %}
+                    <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" {#width="100%"#}>
+                {% endif %}
+            </td>
+            <td class="btn btn-info"><a href="{{ path('details_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-eye"></i></a></td>
+            <td class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></td>
+            <td class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></td>
         </tr>
         {% endfor %}
         </tbody>
