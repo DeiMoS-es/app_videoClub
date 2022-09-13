@@ -25,9 +25,6 @@ class UserController extends AbstractController
     }
 
     #[Route('/registro', name: 'registroUsuario')]
-
-
-
     public function registroUsuario(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
