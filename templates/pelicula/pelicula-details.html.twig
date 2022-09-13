@@ -4,15 +4,9 @@
 
 {% block body %}
     {{ dump(pelicula) }}
-    <div class="container">
-        <h3>Titulo: {{ pelicula.titulo }}</h3>
-        <div>
-            <p> Descripcion: {{ pelicula.descripcion }}</p>
-            <p> Descripcion: {{ pelicula.tipo }}</p>
-
-        </div>
-        <div class="img">
-            <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found">
-        </div>
+    <div class="mx-auto text-center pt-8 pb-4">
+        <h1 class="text-gray-700 font-bold text-3xl py-2">{{ pelicula.titulo }}</h1>
+        <img style="width: 36%" class="shadow-xl rounded-xl" src="{{ pelicula.foto }}">
+        <p class="text-base text-gray-700 pt-4 pb-10 leading-8 font-light">{{ pelicula.descripcion }}</p>
     </div>
 {% endblock %}

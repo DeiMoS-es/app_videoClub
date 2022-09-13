@@ -3,16 +3,19 @@
 {% block title %}Hello PeliculaController!{% endblock %}
 
 {% block navBar %} {{ parent() }}{% endblock %}
-
+{% block stylesheets%}{{ parent() }} {% endblock %}
 {% block body %}
+    {{ parent() }}
 <div class="container">
-    {{ form(form) }}
+
+    <div class="mx-auto w-4/5 my-8">
+        <a class="btn btn-info " href="/insertar/pelicula"> Crear Nueva Pelicula</a>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
             <td>Id</td>
             <td>Titulo</td>
-            <td>Descripcion</td>
             <td>Fecha Alta</td>
             <td>Portada</td>
             <td class="text-center" colspan="3">Opciones </td>
@@ -23,13 +26,13 @@
         <tr>
             <td><a href="{{ path('details_pelicula', {id:pelicula.id}) }}">Ver</a></td>
             <td>{{ pelicula.titulo }}</td>
-            <td>{{ pelicula.descripcion }}</td>
             <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
-
             <td>
+
                 {% if pelicula.foto != null %}
-                    <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" {#width="100%"#}>
+                    <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="100%">
                 {% endif %}
+                {#<img style="width: 60%" src="{{ pelicula.foto }}">#}
             </td>
             <td class="btn btn-info"><a href="{{ path('details_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-eye"></i></a></td>
             <td class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></td>

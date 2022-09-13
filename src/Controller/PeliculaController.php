@@ -25,10 +25,10 @@ class PeliculaController extends AbstractController
     }
 
     #[Route('/', name: 'app_pelicula')]
-    public function index(Request $request, UserRepository $userRepository, SluggerInterface $slugger): Response
+    public function index(Request $request, UserRepository $userRepository): Response
     {
         $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculas();
-
+        //$peliculas = $this->em->getRepository(Pelicula::class)->findAll();
         /*
         //dd($peliculas);
         $idUsuario = $peliculas[0]['user_id'];
@@ -38,7 +38,14 @@ class PeliculaController extends AbstractController
         //$user = $this->em->getRepository(User::class)->findById(1);
         dd($user);
         */
+        return $this->render('pelicula/index.html.twig', [
+            'controller_name' => 'PeliculaController',
+            'peliculas' => $peliculas
+        ]);
+    }
 
+    #[Route('/insertar/pelicula', name: 'insertar_pelicula')]
+    public function insert(Request $request,SluggerInterface $slugger):Response{
         $pelicula = new Pelicula();
         $form = $this->createForm(PeliculaType::class, $pelicula);//Genero el formulario, y lo relaciono con la entidad
         $form->handleRequest($request);
@@ -46,9 +53,7 @@ class PeliculaController extends AbstractController
             $file = $form->get('foto')->getData();
             $url = str_replace(" ", "-", $form->get('titulo')->getData());
             if($file){
-                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                $newFilename = uniqid().'.'.$file->guessExtension();
                 try {
                     $file->move(
                         $this->getParameter('files_directory'),
@@ -67,22 +72,11 @@ class PeliculaController extends AbstractController
             $this->em->flush();
             return $this->redirectToRoute('app_pelicula');
         }
-        return $this->render('pelicula/index.html.twig', [
+
+        return $this->render('pelicula/pelicula-insertar.html.twig', [
             'controller_name' => 'PeliculaController',
             'form' => $form->createView(),
-            'peliculas' => $peliculas
         ]);
-    }
-
-    #[Route('/insertar/pelicula', name: 'insertar_pelicula')]
-    public function insert(){
-        $pelicula = new Pelicula('Superman2', 'Accion', 'This is the description of Superman', 'foto4.jpg', 'www.google.com' );
-        $usuario = $this->em->getRepository(User::class)->find(1);
-        $pelicula->setUser($usuario);
-        $this->em->persist($pelicula);
-        $this->em->flush();
-
-        return new JsonResponse(['succes' => true]);
     }
 
     #[Route('/update/pelicula', name: 'update_pelicula')]
@@ -103,9 +97,10 @@ class PeliculaController extends AbstractController
         return new JsonResponse(['succes' => true]);
     }
 
-    #[Route('/details/pelicula/{id}', name: 'details_pelicula')]
-    public function details($id){
+    #[Route('/details/pelicula/{id}', methods:['GET'] ,name: 'details_pelicula')]
+    public function details($id):Response{
         $pelicula = $this->em->getRepository(Pelicula::class)->find($id);
+
         return $this->render('pelicula/pelicula-details.html.twig', ['pelicula' => $pelicula]);
     }
 }
