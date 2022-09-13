@@ -9,37 +9,39 @@
 <div class="container">
 
     <div class="mx-auto w-4/5 my-8">
-        <a class="btn btn-info " href="/insertar/pelicula"> Crear Nueva Pelicula</a>
+        <a class="btn btn-info transition-all hover:bg-green-300" href="/insertar/pelicula"> Crear Nueva Pelicula</a>
     </div>
-    <table class="table table-striped">
+    <table class="table table-hover table-striped">
         <thead>
         <tr>
-            <td>Id</td>
-            <td>Titulo</td>
-            <td>Fecha Alta</td>
-            <td>Portada</td>
-            <td class="text-center" colspan="3">Opciones </td>
+            <td >Id</td>
+            <td >Titulo</td>
+            <td >Fecha Alta</td>
+            <td >Portada</td>
+            <td >Opciones </td>
         </tr>
         </thead>
         <tbody>
         {% for pelicula in peliculas %}
-        <tr>
-            <td><a href="{{ path('details_pelicula', {id:pelicula.id}) }}">Ver</a></td>
-            <td>{{ pelicula.titulo }}</td>
-            <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
-            <td>
+            <tr>
+                <td>{{ pelicula.id }}</td>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
+                <td>
 
-                {% if pelicula.foto != null %}
-                    <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="100%">
-                {% endif %}
-                {#<img style="width: 60%" src="{{ pelicula.foto }}">#}
-            </td>
-            <td class="btn btn-info"><a href="{{ path('details_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-eye"></i></a></td>
-            <td class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></td>
-            <td class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
-        {% endfor %}
+                    {% if pelicula.foto != null %}
+                        <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="100%">
+                    {% endif %}
+                    {#<img style="width: 60%" src="{{ pelicula.foto }}">#}
+                </td>
+                <td>
+                    <button class="btn btnInfo btn-info"><a style="text-decoration:none; color:white" href="{{ path('details_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-eye"></i>Ver</a></button>
+                    <button class="btn btnWarning btn-warning"><a style="text-decoration:none; color:white" href="{{ path('update_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-pen-to-square"></i>Editar</button>
+                    <button class="btn btnDanger btn-danger"><a style="text-decoration:none; color:white" href="{{ path('remove_pelicula', {id:pelicula.id}) }}"><i class="fa-regular fa-trash-can"></i>Eliminar</button>
+                </td>
+            </tr>
         </tbody>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}

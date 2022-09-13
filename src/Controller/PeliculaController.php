@@ -6,6 +6,7 @@ use App\Entity\Actor;
 use App\Entity\Pelicula;
 use App\Entity\User;
 use App\Form\PeliculaType;
+use App\Repository\PeliculaRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class PeliculaController extends AbstractController
 {
     private $em;
-    public function __construct(EntityManagerInterface $em)
+    private $peliculaRepositorio;
+    public function __construct(EntityManagerInterface $em, PeliculaRepository $peliculaRepositorio)
     {
         $this->em = $em;
+        $this->peliculaRepositorio = $peliculaRepositorio;
     }
 
     #[Route('/', name: 'app_pelicula')]
@@ -79,22 +82,55 @@ class PeliculaController extends AbstractController
         ]);
     }
 
-    #[Route('/update/pelicula', name: 'update_pelicula')]
-    public function update(){
-        $pelicula = $this->em->getRepository(Pelicula::class)->find(4);
-        $pelicula->setTipo('Humor');
-        $this->em->flush();
+    #[Route('/update/pelicula/{id}', name: 'update_pelicula')]
+    public function update($id, Request $request):Response{
+        $pelicula = $this->peliculaRepositorio->find($id);
+        $form = $this->createForm(PeliculaType::class, $pelicula);
+        $form->handleRequest($request);
+        $foto = $form->get('foto')->getData();
+        //TODO comprobar si la imagen es la misma
+        if ($form->isSubmitted() && $form->isValid()){
+            if ($foto){
+                if ($pelicula->getFoto() !== null){
+                    if (file_exists($this->getParameter('files_directory').'/'.$pelicula->getFoto())){
+                        $this->getParameter('files_directory').$pelicula->getFoto();
+                        $nuevoNombre = uniqid().'.'.$foto->guessExtension();
+                        //dd($nuevoNombre);
+                        try {
+                            $foto->move(
+                                $this->getParameter('files_directory'),
+                                $nuevoNombre
+                            );
+                        } catch (FileException $e) {
+                            throw new \Exception('Problema con el archivo');
+                        }
+                        $pelicula->setFoto($nuevoNombre);
+                        $this->em->flush();
 
-        return new JsonResponse(['succes' => true]);
+                        return $this->redirectToRoute('app_pelicula');
+                    }
+                }
+            }else{
+               $pelicula->setTitulo($form->get('titulo')->getData());
+               $pelicula->setTipo($form->get('tipo')->getData());
+               $pelicula->setDescripcion($form->get('descripcion')->getData());
+               $this->em->flush();
+               return $this->redirectToRoute('app_pelicula');
+            }
+        }
+        return $this->render('pelicula/pelicula-editar.html.twig',[
+            'pelicula' => $pelicula,
+            'form' => $form->createView()
+        ]);
     }
 
-    #[Route('/remove/pelicula', name: 'remove_pelicula')]
-    public function remove(){
-        $pelicula = $this->em->getRepository(Pelicula::class)->find(5);
+    #[Route('/remove/pelicula/{id}', name: 'remove_pelicula')]
+    public function remove($id){
+        $pelicula = $this->peliculaRepositorio->find($id);
         $this->em->remove($pelicula);
         $this->em->flush();
 
-        return new JsonResponse(['succes' => true]);
+        return $this->redirectToRoute('app_pelicula');
     }
 
     #[Route('/details/pelicula/{id}', methods:['GET'] ,name: 'details_pelicula')]

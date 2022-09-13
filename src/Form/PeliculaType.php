@@ -37,7 +37,11 @@ class PeliculaType extends AbstractType
                 ),
                 'label' => false
             ])
-            ->add('foto', FileType::class, [
+            ->add('foto', FileType::class, array(
+                'required' => false,
+                'mapped' => false
+            ))
+            /*->add('foto', FileType::class, [
                 'label' => 'photo',
                 'required' => false,
                 'label' => false,
@@ -53,7 +57,7 @@ class PeliculaType extends AbstractType
                         'mimeTypesMessage' => 'Porfavor introduce un formato correcto',
                     ])
                 ]
-            ])
+            ])*/
             ->add('submit', SubmitType::class)
         ;
     }
