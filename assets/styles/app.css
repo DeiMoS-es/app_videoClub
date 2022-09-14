@@ -1,20 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
 body {
     background-color: lightgray;
 }
 
-/**
-Estilo tabla
- */
-
+/*Estilo tabla*/
 .imgTabla{
     width: 35%;
     height: 35%;
 }
 
-/**
-Estilos para botones
- */
-
+/*Estilos para botones*/
 .btnInfo{
     background-color: #2FC7E6 !important;
 }
@@ -25,3 +27,18 @@ Estilos para botones
     background-color: #FFCA2C !important;
 }
 
+/*Estilos formulario registro usuario*/
+.container{
+
+    max-width: 200px !important;
+}
+.formRegistro{
+    display: flex;
+    width: 200px;
+    padding: 50px;
+    margin: 50px;
+}
+
+#btnRegistroUsuario{
+    border-radius: 200px;
+}
