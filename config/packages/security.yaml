@@ -18,10 +18,11 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: app_login
-                check_path: app_login
+                #He cambiado la ruta para acceder a esta nueva prueba de login, se cambiará más adelante
+                login_path: app_login2
+                check_path: app_login2
             logout:
-                path: app_logout
+                path: app_logout2
                 target: app_pelicula
            # custom_authenticator: App\Security\LoginFormAuthenticator
             # activate different ways to authenticate
