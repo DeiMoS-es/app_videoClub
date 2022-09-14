@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PeliculaRepository::class)]
 class Pelicula
@@ -20,42 +21,40 @@ class Pelicula
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $titulo = null;
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2,max: 50,minMessage: 'Your first name must be at least {{ limit }} characters long',maxMessage: 'Your first name cannot be longer than {{ limit }} characters',)]
+    private $titulo;
 
     #[ORM\Column(length: 255)]
-    private ?string $tipo = null;
+    #[Assert\NotBlank]
+    private $tipo;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $descripcion = null;
+    #[Assert\NotBlank]
+    private $descripcion;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $foto = null;
+    private $foto;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $fecha_alta = null;
+    private \DateTimeInterface $fecha_alta;
 
     #[ORM\Column(length: 255)]
-    private ?string $url = null;
+    private $url;
 
     #[ORM\ManyToOne(inversedBy: 'peliculas')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private User $user;
 
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'peliculas')]
     private Collection $actores;
 
 
-    public function __construct($titulo = null, $tipo = null, $descripcion = null, $foto = null, $url = null)
+    public function __construct()
     {
-        $this->titulo = $titulo;
-        $this->tipo = $tipo;
-        $this->descripcion = $descripcion;
-        $this->foto = $foto;
-        $this->fecha_alta = new \DateTime();
-        $this->url = $url;
         $this->actores = new ArrayCollection();
     }
 
@@ -69,7 +68,7 @@ class Pelicula
         return $this->titulo;
     }
 
-    public function setTitulo(string $titulo): self
+    public function setTitulo(?string $titulo): self
     {
         $this->titulo = $titulo;
 
@@ -81,7 +80,7 @@ class Pelicula
         return $this->tipo;
     }
 
-    public function setTipo(string $tipo): self
+    public function setTipo(?string $tipo): self
     {
         $this->tipo = $tipo;
 
@@ -93,7 +92,7 @@ class Pelicula
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): self
+    public function setDescripcion(?string $descripcion): self
     {
         $this->descripcion = $descripcion;
 

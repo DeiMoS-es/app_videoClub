@@ -27,10 +27,10 @@
                 <td>{{ pelicula.id }}</td>
                 <td>{{ pelicula.titulo }}</td>
                 <td>{{ pelicula.fecha_alta | date('d/m/Y')}}</td>
-                <td>
+                <td class="imgTabla">
 
                     {% if pelicula.foto != null %}
-                        <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="100%">
+                        <img src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="40%">
                     {% endif %}
                     {#<img style="width: 60%" src="{{ pelicula.foto }}">#}
                 </td>

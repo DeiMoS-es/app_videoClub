@@ -5,9 +5,12 @@ body {
 /**
 Estilo tabla
  */
-.tablePerso{
 
+.imgTabla{
+    width: 35%;
+    height: 35%;
 }
+
 /**
 Estilos para botones
  */

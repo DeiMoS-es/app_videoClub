@@ -69,7 +69,8 @@ class PeliculaController extends AbstractController
             }
             //TODO cambiar por una url correcta a un trailer
             $pelicula->setUrl($url);
-            $user = $this->em->getRepository(User::class)->find(1);
+            $pelicula->setFechaAlta(new \DateTime());
+            $user = $this->em->getRepository(User::class)->find(6);
             $pelicula->setUser($user);
             $this->em->persist($pelicula);
             $this->em->flush();
