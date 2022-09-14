@@ -29,14 +29,14 @@ body {
 
 /*Estilos formulario registro usuario*/
 .container{
-
-    max-width: 200px !important;
+    display: flex;
 }
 .formRegistro{
-    display: flex;
-    width: 200px;
     padding: 50px;
     margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #btnRegistroUsuario{
