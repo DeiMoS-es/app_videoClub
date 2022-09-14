@@ -30,6 +30,7 @@ body {
 /*Estilos formulario registro usuario*/
 .container{
     display: flex;
+    flex-direction: column;
 }
 .formRegistro{
     padding: 50px;

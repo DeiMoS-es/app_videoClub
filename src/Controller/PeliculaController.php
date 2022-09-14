@@ -30,6 +30,8 @@ class PeliculaController extends AbstractController
     #[Route('/', name: 'app_pelicula')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
+        $session = $request->getSession();
+        //dd($session->getId());
         $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculas();
         //$peliculas = $this->em->getRepository(Pelicula::class)->findAll();
         /*
