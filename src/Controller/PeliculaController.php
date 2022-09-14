@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\PeliculaType;
 use App\Repository\PeliculaRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -30,22 +31,7 @@ class PeliculaController extends AbstractController
     #[Route('/', name: 'app_pelicula')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
-        $session = $request->getSession();
-        //dd($session->getId());
         $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculas();
-        dd($peliculas);
-        $peliculas2 = $this->em->getRepository(Pelicula::class)->findAll();
-        dd($peliculas2);
-        //$peliculas = $this->em->getRepository(Pelicula::class)->findAll();
-        /*
-        //dd($peliculas);
-        $idUsuario = $peliculas[0]['user_id'];
-        //dd($idUsuario->getId());
-        //$user = $this->em->getRepository(User::class)->find($idUsuario);
-        $user = $this->em->getRepository(User::class)->find($idUsuario);
-        //$user = $this->em->getRepository(User::class)->findById(1);
-        dd($user);
-        */
         return $this->render('pelicula/index.html.twig', [
             'controller_name' => 'PeliculaController',
             'peliculas' => $peliculas
@@ -142,7 +128,15 @@ class PeliculaController extends AbstractController
     #[Route('/details/pelicula/{id}', methods:['GET'] ,name: 'details_pelicula')]
     public function details($id):Response{
         $pelicula = $this->em->getRepository(Pelicula::class)->find($id);
+        $newArrayActores = new ArrayCollection();
+        $newArrayActores = $pelicula->getActores();
+       /* foreach ($newArrayCollection as $newArray){
+            dd($newArray);
+        }*/
 
-        return $this->render('pelicula/pelicula-details.html.twig', ['pelicula' => $pelicula]);
+        //dd($pelicula->getActores());
+        //dd($newPelicula);
+
+        return $this->render('pelicula/pelicula-details.html.twig', ['pelicula' => $pelicula, 'actores'=>$newArrayActores]);
     }
 }

@@ -51,6 +51,17 @@ class PeliculaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findPeliculaAndActor($idPelicula){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT pelicula.id, pelicula.titulo, pelicula.tipo, pelicula.descripcion, pelicula.foto, pelicula.fecha_alta ,pelicula.url, actor.nombre 
+                FROM App:Pelicula pelicula
+                JOIN pelicula.actores actor'
+            )
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Pelicula[] Returns an array of Pelicula objects
 //     */

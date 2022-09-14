@@ -6,6 +6,13 @@
     <div class="mx-auto text-center pt-8 pb-4">
         <h1 class="text-gray-700 font-bold text-3xl py-2">{{ pelicula.titulo }}</h1>
         <img style="width: 36%" class="shadow-xl rounded-xl" src="{{ asset('uploads/files/' ~ pelicula.foto) }}" alt="Not found" width="100%">
+        <h3>Descripcion:</h3>
         <p class="text-base text-gray-700 pt-4 pb-10 leading-8 font-light">{{ pelicula.descripcion }}</p>
+        <h3>Actores:</h3>
+        {% for actor in actores %}
+            <p>{{ actor.nombre }}</p>
+        {% endfor %}
+
+
     </div>
 {% endblock %}
