@@ -33,6 +33,9 @@ class PeliculaController extends AbstractController
         $session = $request->getSession();
         //dd($session->getId());
         $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculas();
+        dd($peliculas);
+        $peliculas2 = $this->em->getRepository(Pelicula::class)->findAll();
+        dd($peliculas2);
         //$peliculas = $this->em->getRepository(Pelicula::class)->findAll();
         /*
         //dd($peliculas);
