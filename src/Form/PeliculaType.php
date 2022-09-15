@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Pelicula;
+use App\Repository\ActorRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -53,7 +55,13 @@ class PeliculaType extends AbstractType
                     ])
                 ]
             ))
-
+            ->add('actores', EntityType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'multiple' => true,
+                'class' => 'App\Entity\Actor',
+                'choice_label' => 'nombre',
+                ))
             ->add('submit', SubmitType::class)
         ;
     }

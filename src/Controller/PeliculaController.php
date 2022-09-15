@@ -58,9 +58,14 @@ class PeliculaController extends AbstractController
                     throw new \Exception('Problema con el archivo');
                 }
                 $pelicula->setFoto($newFilename);
+            }else{//Si no se introduce una imagen, se pone una por defecto
+                $pelicula->setFoto('default.jpg');
             }
-            //TODO cambiar por una url correcta a un trailer
             $pelicula->setUrl($url);
+            $actores = $form->get('actores')->getData();//Recupero un Array con los actores introducidos
+            foreach ($actores as $actor){//se añaden los actores uno a uno
+                $pelicula->addActore($actor);
+            }
             $pelicula->setFechaAlta(new \DateTime());
             $user = $this->em->getRepository(User::class)->find(6);
             $pelicula->setUser($user);
@@ -80,14 +85,16 @@ class PeliculaController extends AbstractController
         $pelicula = $this->peliculaRepositorio->find($id);
         $form = $this->createForm(PeliculaType::class, $pelicula);
         $form->handleRequest($request);
+
         $foto = $form->get('foto')->getData();
+        //$foto = $pelicula->getFoto();
+
         if ($form->isSubmitted() && $form->isValid()){
+           // dd($foto);
             if ($foto){
                 if ($pelicula->getFoto() !== null){
                     if (file_exists($this->getParameter('files_directory').'/'.$pelicula->getFoto())){
-                        //$this->getParameter('files_directory').$pelicula->getFoto();
                         $nuevoNombre = uniqid().'.'.$foto->guessExtension();
-                        //dd($nuevoNombre);
                         try {
                             $foto->move(
                                 $this->getParameter('files_directory'),
@@ -96,7 +103,9 @@ class PeliculaController extends AbstractController
                             //Necesitamos eliminar la foto anterior si se ha actualizado la foto
                             $pathFoto = '../public/uploads/files/';
                             $fotoVieja = $pelicula->getFoto();
-                            unlink($pathFoto.$fotoVieja);
+                            if($fotoVieja != 'default.jpg'){
+                                unlink($pathFoto.$fotoVieja);
+                            }
                         } catch (FileException $e) {
                             throw new \Exception('Problema con el archivo');
                         }

@@ -22,7 +22,7 @@ security:
                 login_path: app_login
                 check_path: app_login
             logout:
-                path: app_logout2
+                path: app_logout
                 target: app_pelicula
            # custom_authenticator: App\Security\LoginFormAuthenticator
             # activate different ways to authenticate
@@ -36,6 +36,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/insertar/pelicula, roles: ROLE_USER }
+         - { path: ^/update/pelicula/*, roles: ROLE_USER }
+         - { path: ^/remove/pelicula/*, roles: ROLE_USER }
+         - { path: ^/details/pelicula/*, roles: ROLE_USER }
 
 when@test:
     security:
