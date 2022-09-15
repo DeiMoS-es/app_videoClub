@@ -19,8 +19,8 @@ security:
             provider: app_user_provider
             form_login:
                 #He cambiado la ruta para acceder a esta nueva prueba de login, se cambiará más adelante
-                login_path: app_login2
-                check_path: app_login2
+                login_path: app_login
+                check_path: app_login
             logout:
                 path: app_logout2
                 target: app_pelicula
