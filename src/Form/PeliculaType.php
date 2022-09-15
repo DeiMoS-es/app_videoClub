@@ -30,7 +30,7 @@ class PeliculaType extends AbstractType
             ])
             ->add('tipo', ChoiceType::class,[
                 'choices'  => Pelicula::TIPOS,
-                'label' => false
+
             ])
             ->add('descripcion', TextareaType::class, [
                 'attr' => array(

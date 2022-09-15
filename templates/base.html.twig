@@ -30,7 +30,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ path('app_pelicula')}}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Log In<i class="fa-solid fa-arrow-right-to-bracket"></i></a> <!-- pista is_granted UNA VEZ TENGA LA SESION, CONFIGURAR PARA QUE APAREZCA LOGIN/LOGOUT -->
@@ -55,7 +55,7 @@
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <a class="nav-link" href="/{{ app.user ? 'logout2' : 'login' }}">{{ app.user ? 'Logout' : 'Login'}}</a><!-- REVISAR SI DEJARLO AHÍ O EN LA BARRA A LA IZQUIERDA-->
+                    <a class="nav-link" href="/{{ app.user ? 'logout' : 'login' }}">{{ app.user ? 'Logout' : 'Login'}}</a><!-- REVISAR SI DEJARLO AHÍ O EN LA BARRA A LA IZQUIERDA-->
                 </div>
             </div>
         </nav>
