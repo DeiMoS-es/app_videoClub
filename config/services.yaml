@@ -6,7 +6,7 @@
 
 #Aqui en parameter indicamos la ruta para guardar distintos archivos que se van a subir a la app
 parameters:
-    files_directory: '%kernel.project_dir%/public/uploads/files/imagesPelicula'
+    files_directory: '%kernel.project_dir%/public/uploads/files'
     foto_usuarios: '%kernel.project_dir%/public/uploads/files/imagesPerfil'
 
 services:

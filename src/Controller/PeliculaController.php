@@ -31,7 +31,8 @@ class PeliculaController extends AbstractController
     #[Route('/', name: 'app_pelicula')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
-        $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculas();
+        $peliculas = $this->em->getRepository(Pelicula::class)->findAllPeliculasAndUser();
+
         return $this->render('pelicula/index.html.twig', [
             'controller_name' => 'PeliculaController',
             'peliculas' => $peliculas
@@ -80,12 +81,11 @@ class PeliculaController extends AbstractController
         $form = $this->createForm(PeliculaType::class, $pelicula);
         $form->handleRequest($request);
         $foto = $form->get('foto')->getData();
-        //TODO comprobar si la imagen es la misma
         if ($form->isSubmitted() && $form->isValid()){
             if ($foto){
                 if ($pelicula->getFoto() !== null){
                     if (file_exists($this->getParameter('files_directory').'/'.$pelicula->getFoto())){
-                        $this->getParameter('files_directory').$pelicula->getFoto();
+                        //$this->getParameter('files_directory').$pelicula->getFoto();
                         $nuevoNombre = uniqid().'.'.$foto->guessExtension();
                         //dd($nuevoNombre);
                         try {
@@ -93,12 +93,15 @@ class PeliculaController extends AbstractController
                                 $this->getParameter('files_directory'),
                                 $nuevoNombre
                             );
+                            //Necesitamos eliminar la foto anterior si se ha actualizado la foto
+                            $pathFoto = '../public/uploads/files/';
+                            $fotoVieja = $pelicula->getFoto();
+                            unlink($pathFoto.$fotoVieja);
                         } catch (FileException $e) {
                             throw new \Exception('Problema con el archivo');
                         }
                         $pelicula->setFoto($nuevoNombre);
                         $this->em->flush();
-
                         return $this->redirectToRoute('app_pelicula');
                     }
                 }
@@ -128,15 +131,7 @@ class PeliculaController extends AbstractController
     #[Route('/details/pelicula/{id}', methods:['GET'] ,name: 'details_pelicula')]
     public function details($id):Response{
         $pelicula = $this->em->getRepository(Pelicula::class)->find($id);
-        $newArrayActores = new ArrayCollection();
         $newArrayActores = $pelicula->getActores();
-       /* foreach ($newArrayCollection as $newArray){
-            dd($newArray);
-        }*/
-
-        //dd($pelicula->getActores());
-        //dd($newPelicula);
-
         return $this->render('pelicula/pelicula-details.html.twig', ['pelicula' => $pelicula, 'actores'=>$newArrayActores]);
     }
 }

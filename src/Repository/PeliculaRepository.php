@@ -39,14 +39,23 @@ class PeliculaRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllPeliculas(){
+    public function findAllPeliculasAndUser(){
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT pelicula.id, pelicula.titulo, pelicula.tipo, pelicula.descripcion, pelicula.foto, pelicula.fecha_alta ,pelicula.url, user.id AS user_id, user.email, actor.nombre
+                'SELECT pelicula.id, pelicula.titulo, pelicula.tipo, pelicula.descripcion, pelicula.foto, pelicula.fecha_alta ,pelicula.url, user.id AS user_id, user.email
                     FROM App:Pelicula pelicula
                     JOIN pelicula.user user
-                    JOIN pelicula.actores actor
                     ORDER BY pelicula.fecha_alta DESC'
+            )
+            ->getResult();
+    }
+
+    public function findAllPeliculasAndActor(){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT pelicula.id, pelicula.titulo, pelicula.tipo, pelicula.descripcion, pelicula.foto, pelicula.fecha_alta ,pelicula.url, actor.nombre
+                FROM App:Pelicula pelicula
+                JOIN pelicula.actores actor'
             )
             ->getResult();
     }

@@ -32,7 +32,7 @@ class UserController extends AbstractController
         $registration_form = $this->createForm(RegistrationFormType::class, $user);
         $registration_form->handleRequest($request);
         if ($registration_form->isSubmitted() && $registration_form->isValid()){
-            $plaintextPassword = $registration_form->get('password')->getData();
+            $plaintextPassword = $registration_form->get('plainPassword')->getData();
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $plaintextPassword
@@ -41,7 +41,7 @@ class UserController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_login2');
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $registration_form->createView(),

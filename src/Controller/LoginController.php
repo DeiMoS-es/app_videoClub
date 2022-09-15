@@ -30,8 +30,8 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/logout', name: 'app_logout')]
-    public function logout(AuthenticationUtils $authenticationUtils): Response
+    #[Route('/logout', name: 'fsgsfg')]
+    public function logoghgfhut(AuthenticationUtils $authenticationUtils): Response
     {
     }
 }
