@@ -85,12 +85,8 @@ class PeliculaController extends AbstractController
         $pelicula = $this->peliculaRepositorio->find($id);
         $form = $this->createForm(PeliculaType::class, $pelicula);
         $form->handleRequest($request);
-
         $foto = $form->get('foto')->getData();
-        //$foto = $pelicula->getFoto();
-
         if ($form->isSubmitted() && $form->isValid()){
-           // dd($foto);
             if ($foto){
                 if ($pelicula->getFoto() !== null){
                     if (file_exists($this->getParameter('files_directory').'/'.$pelicula->getFoto())){
