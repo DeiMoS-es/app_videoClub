@@ -41,6 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Pelicula::class, orphanRemoval: true)]
     private Collection $peliculas;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updateOn = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdOn = null;
+
     /**
      * User constructor.
      * @param int|null $id
@@ -58,6 +64,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
         $this->photo = $photo;
         $this->description = $description;
+        $this->createdOn = new \DateTime();//Se le asigna automaticamente la fecha de creación
+        $this->markAsUpdate();//Cuando se construya un usuario se
         $this->peliculas = new ArrayCollection();
     }
 
@@ -200,6 +208,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pelicula->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdateOn(): ?\DateTimeInterface
+    {
+        return $this->updateOn;
+    }
+
+    public function setUpdateOn(?\DateTimeInterface $updateOn): self
+    {
+        $this->updateOn = $updateOn;
+
+        return $this;
+    }
+
+    public function markAsUpdate():void
+    {
+        $this->updateOn = new \DateTime();
+    }
+
+    public function getCreatedOn(): ?\DateTimeInterface
+    {
+        return $this->createdOn;
+    }
+
+    public function setCreatedOn(\DateTimeInterface $createdOn): self
+    {
+        $this->createdOn = $createdOn;
 
         return $this;
     }

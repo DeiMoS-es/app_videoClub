@@ -9,7 +9,19 @@
 body {
     background-color: lightgray;
 }
-
+input{
+    border: 1px solid #ced4da !important;
+    display: flex;
+    border-radius: 20px;
+}
+#btnLogin{
+    margin-top: 8px;
+    width: 203px;
+    border-radius: 20px;
+}
+#btnAltaPelicula{
+    width: 450px;
+}
 /*Estilo tabla*/
 .imgTabla{
     width: 35%;
