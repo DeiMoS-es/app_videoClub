@@ -31,7 +31,7 @@ class UpdateUserType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'label' => 'Tipo de candidato',
-                'choices' => ['Admin' => 'candidato', 'User' => 'trabajador'],
+                'choices' => ['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'],
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,

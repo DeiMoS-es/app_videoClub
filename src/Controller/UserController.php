@@ -106,7 +106,7 @@ class UserController extends AbstractController
                  //TODO actualizar password
                  $password = $form->get('password')->getData();
                  $newPas = $this->hasPasswordService->encriptarPassword($password, $user);
-                 $user->setPassword($form->get('$newPas')->getData());
+                 $user->setPassword($newPas);
                  $user->setDescription($form->get('description')->getData());
                  $user->setUpdateOn(new \DateTime());
                  $this->em->flush();
