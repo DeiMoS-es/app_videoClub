@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ActorController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="formRegistro">
+            <h1>Crear Actor</h1>
+            {{ form_start(formActor) }}
+                <div class="form-group">
+                    {{ form_row(formActor.nombre) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(formActor.fotoActor) }}
+                </div>
+                <div id="btnAltaPelicula">
+                    {{ form_row(formActor.Submit) }}
+                </div>
+            {{ form_end(formActor) }}
+        </div>
+    </div>
+
+{% endblock %}

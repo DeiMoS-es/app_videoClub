@@ -8,6 +8,7 @@
 parameters:
     files_directory: '%kernel.project_dir%/public/uploads/files'
     foto_usuarios: '%kernel.project_dir%/public/uploads/files/imagesPerfil/'
+    foto_actores : '%kernel.project_dir%/public/uploads/files/imagesActores/'
 
 services:
     # default configuration for services in *this* file

@@ -30,16 +30,19 @@ class UpdateUserType extends AbstractType
                 ],
             ])
             ->add('roles', ChoiceType::class, [
+                'disabled'=> true,
                 'label' => 'Tipo de candidato',
                 'choices' => ['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'],
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
+
                 'attr' => [
-                    'class' => 'form-control select2 '
+                    'class' => 'form-control select2 ',
+                    'type' => 'hidden'
                 ],
                 'row_attr' => ['class' => 'form-group col-md-12'],
-                'label_attr' => ['class' => 'form-label']
+                'label_attr' => ['class' => 'form-label'],
             ])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -97,6 +100,7 @@ class UpdateUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'accion' => 'ADMIN'
         ]);
     }
 }
