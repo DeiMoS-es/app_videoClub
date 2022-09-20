@@ -56,7 +56,7 @@ class ActorController extends AbstractController
         ]);
     }
 
-    #[Route('/editar/actor/{id}', name: 'editar_actor')]
+    #[Route('/update/actor/{id}', name: 'update_actor')]
     public function update(Request $request, $id):Response{
         $actor = $this->actorService->buscarActorId($id);
         $form = $this->createForm(ActorFormType::class, $actor);
@@ -76,7 +76,7 @@ class ActorController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/actor/{id}', methods: ['DELETE'], name: 'remove_actor')]
+    #[Route('/remove/actor/{id}', name: 'remove_actor')]
     public function remove(Request $request, $id):Response{
         $actor = $this->actorService->buscarActorId($id);
         $this->em->remove($actor);
@@ -84,8 +84,13 @@ class ActorController extends AbstractController
         return $this->redirectToRoute('app_actor');
     }
 
-    #[Route('/remove/actor/{id}', name: 'remove_actor')]
-    public function details():Response{
-
+    #[Route('/details/actor/{id}', name: 'details_actor')]
+    public function details($id):Response{
+        $actor = $this->actorService->buscarActorId($id);
+        $newArrayPeliculas = $actor->getPeliculas();
+        return $this->render('actor/actor-details.html.twig', [
+            'actor'=>$actor,
+            'peliculas'=>$newArrayPeliculas
+        ]);
     }
 }

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PeliculaController!{% endblock %}
+
+{% block body %}
+    <div class="mx-auto text-center pt-8 pb-4">
+        <h1 class="text-gray-700 font-bold text-3xl py-2">{{ actor.nombre }}</h1>
+        <img style="width: 36%" class="shadow-xl rounded-xl" src="{{ asset('uploads/files/' ~ actor.fotoActor) }}" alt="Not found" width="100%">
+        {#<h3>Descripcion:</h3>
+        <p class="text-base text-gray-700 pt-4 pb-10 leading-8 font-light">{{ pelicula.descripcion }}</p>#}
+        <h3>Peliculas:</h3>
+        {% for pelicula in peliculas %}
+            <p>{{ pelicula.titulo }}</p>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}

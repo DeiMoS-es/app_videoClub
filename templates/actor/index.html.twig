@@ -22,11 +22,11 @@
                     <tr>
                         <td>{{ actor.id }}</td>
                         <td>{{ actor.nombre }}</td>
-                     {#   <td>
+                        <td>
                             <button class="btn btnInfo btn-info"><a style="text-decoration:none; color:white" href="{{ path('details_actor', {id:actor.id}) }}"><i class="fa-regular fa-eye"></i>Ver</a></button>
                             <button class="btn btnWarning btn-warning"><a style="text-decoration:none; color:white" href="{{ path('update_actor', {id:actor.id}) }}"><i class="fa-regular fa-pen-to-square"></i>Editar</button>
                             <button class="btn btnDanger btn-danger"><a style="text-decoration:none; color:white" href="{{ path('remove_actor', {id:actor.id}) }}"><i class="fa-regular fa-trash-can"></i>Eliminar</button>
-                        </td>#}
+                        </td>
                     </tr>
 
                 {% endfor %}
