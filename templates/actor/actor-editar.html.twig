@@ -6,20 +6,20 @@
     <div class="container">
         <div class="formRegistro">
             <h1>Crear Actor</h1>
-            {{ form_start(formActor) }}
+            {{ form_start(formEditActor) }}
                 <div class="form-group">
-                    {{ form_row(formActor.nombre) }}
+                    {{ form_row(formEditActor.nombre) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(formActor.fotoActor) }}
+                    {{ form_row(formEditActor.fotoActor) }}
                 </div>
             <div class="form-group">
-                {{ form_row(formActor.peliculas) }}
+                {{ form_row(formEditActor.peliculas) }}
             </div>
                 <div id="btnAltaPelicula">
-                    {{ form_row(formActor.Submit) }}
+                    {{ form_row(formEditActor.Submit) }}
                 </div>
-            {{ form_end(formActor) }}
+            {{ form_end(formEditActor) }}
         </div>
     </div>
 

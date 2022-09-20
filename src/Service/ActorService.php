@@ -25,6 +25,10 @@ class ActorService extends AbstractController
         return $this->actorRepository->findAll();
     }
 
+    public function buscarActorId(int $id):Actor{
+        return $this->actorRepository->find($id);
+    }
+
     public function saveActor(Actor $actor){
         $this->em->persist($actor);
         $this->em->flush();
@@ -45,6 +49,26 @@ class ActorService extends AbstractController
         }else{
             $actor->setFotoActor('default.jpg');
         }
+    }
 
+    public function editarFoto(Actor $actor, $fotoActor):void{
+        if ($fotoActor){
+            $newNombreFoto = uniqid().'.'.$fotoActor->guessExtension();
+            try {
+                $fotoActor->move(
+                    $this->getParameter('foto_actores'),
+                    $newNombreFoto
+                );
+                //Para actualizar la foto, tengo que comprobar que si se cambia la foto, se elimine la anterior
+                $pathFoto = $this->getParameter('foto_actores');
+                $fotoVieja = $actor->getFotoActor();
+                if($fotoVieja != 'default.jpg'){
+                    unlink($pathFoto.$fotoVieja);
+                }
+                $actor->setFotoActor($newNombreFoto);
+            }catch (FileException $e){
+                throw new \Exception('Problema con el archivo');
+            }
+        }
     }
 }

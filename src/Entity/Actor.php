@@ -72,7 +72,6 @@ class Actor
             $this->peliculas->add($pelicula);
             $pelicula->addActore($this);
         }
-
         return $this;
     }
 
@@ -81,7 +80,6 @@ class Actor
         if ($this->peliculas->removeElement($pelicula)) {
             $pelicula->removeActore($this);
         }
-
         return $this;
     }
 

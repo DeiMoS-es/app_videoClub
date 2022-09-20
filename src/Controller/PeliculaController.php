@@ -129,7 +129,6 @@ class PeliculaController extends AbstractController
         $pelicula = $this->peliculaRepositorio->find($id);
         $this->em->remove($pelicula);
         $this->em->flush();
-
         return $this->redirectToRoute('app_pelicula');
     }
 

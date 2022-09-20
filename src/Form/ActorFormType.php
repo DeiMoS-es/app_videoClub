@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Actor;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -39,7 +40,13 @@ class ActorFormType extends AbstractType
                     ])
                 ]
             ))
-            //->add('peliculas')
+            ->add('peliculas', EntityType::class, array(
+              'required' => false,
+               'mapped' => false,
+               'multiple' => true,
+               'class' => 'App\Entity\Pelicula',
+               'choice_label' => 'titulo',
+            ))
             ->add('Submit', SubmitType::class)
         ;
     }

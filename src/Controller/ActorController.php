@@ -24,7 +24,7 @@ class ActorController extends AbstractController
         $this->actorService = $actorService;
     }
 
-    #[Route('/actor', name: 'app_actor')]
+    #[Route('/actor', methods: ['GET'], name: 'app_actor')]
     public function index(): Response
     {
         $actores = $this->actorService->buscarTodos();
@@ -34,7 +34,7 @@ class ActorController extends AbstractController
         ]);
     }
 
-    #[Route('insertar/actor', name: 'insertar_actor')]
+    #[Route('/insertar/actor', methods: ['GET','POST'],name: 'insertar_actor')]
     public function insertar(Request $request): Response
     {
         $actor = new Actor();
@@ -43,6 +43,10 @@ class ActorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $fotoActor = $form->get('fotoActor')->getData();
             $this->actorService->insertarFoto($actor, $fotoActor);
+            $peliculas = $form->get('peliculas')->getData();
+            foreach ($peliculas as $pelicula){
+                $actor->addPelicula($pelicula);
+            }
             $this->actorService->saveActor($actor);
             return $this->redirectToRoute('app_actor');
         }
@@ -50,5 +54,38 @@ class ActorController extends AbstractController
             'controller_name' => 'ActorController',
             'formActor' => $form->createView()
         ]);
+    }
+
+    #[Route('/editar/actor/{id}', name: 'editar_actor')]
+    public function update(Request $request, $id):Response{
+        $actor = $this->actorService->buscarActorId($id);
+        $form = $this->createForm(ActorFormType::class, $actor);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $fotoActor = $form->get('fotoActor')->getData();
+            $this->actorService->editarFoto($actor, $fotoActor);
+            $peliculas = $form->get('peliculas')->getData();
+            foreach ($peliculas as $pelicula){
+                $actor->addPelicula($pelicula);
+            }
+            $this->actorService->saveActor($actor);
+            return $this->redirectToRoute('app_actor');
+        }
+        return $this->render('actor/actor-editar.html.twig',[
+            'formEditActor' => $form->createView()
+        ]);
+    }
+
+    #[Route('/remove/actor/{id}', methods: ['DELETE'], name: 'remove_actor')]
+    public function remove(Request $request, $id):Response{
+        $actor = $this->actorService->buscarActorId($id);
+        $this->em->remove($actor);
+        $this->em->flush();
+        return $this->redirectToRoute('app_actor');
+    }
+
+    #[Route('/remove/actor/{id}', name: 'remove_actor')]
+    public function details():Response{
+
     }
 }
